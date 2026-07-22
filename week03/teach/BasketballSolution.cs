@@ -37,6 +37,7 @@ public class BasketballSolution
         // Console.WriteLine($"Players: {{{string.Join(", ", players)}}}");
 
         var topPlayers = players.ToArray();
+        Console.WriteLine(topPlayers);
         Array.Sort(topPlayers, (p1, p2) => p2.Value - p1.Value);
 
         Console.WriteLine();

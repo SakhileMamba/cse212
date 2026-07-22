@@ -22,7 +22,24 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var result = new List<string>();
+        var seen = new HashSet<string>();
+
+        foreach (var word in words)
+        {
+            string reverse = word[1].ToString() + word[0];
+
+            if (seen.Contains(reverse))
+            {
+                result.Add($"{word} & {reverse}");
+            }
+            else
+            {
+                seen.Add(word);
+            }
+        }
+
+        return result.ToArray();
     }
 
     /// <summary>
@@ -39,11 +56,24 @@ public static class SetsAndMaps
     public static Dictionary<string, int> SummarizeDegrees(string filename)
     {
         var degrees = new Dictionary<string, int>();
+
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+
+            string degree = fields[3];
+            if (degrees.Keys.Contains(degree))
+            {
+
+                degrees[degree] += 1;
+            }
+            else
+            {
+                degrees[degree] = 1;
+            }
         }
+
 
         return degrees;
     }
@@ -67,7 +97,51 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+
+        var counts = new Dictionary<char, int>();
+
+
+        foreach (char c in word1)
+        {
+            if (c == ' ')
+            {
+                continue;
+            }
+
+            char lower = char.ToLower(c);
+            if (counts.ContainsKey(lower))
+            {
+                counts[lower] += 1;
+            }
+            else
+            {
+                counts[lower] = 1;
+            }
+        }
+
+
+        foreach (char c in word2)
+        {
+            if (c == ' ')
+            {
+                continue;
+            }
+
+            char lower = char.ToLower(c);
+            if (!counts.ContainsKey(lower))
+            {
+                return false;
+            }
+
+            counts[lower] -= 1;
+            if (counts[lower] == 0)
+            {
+                counts.Remove(lower);
+            }
+        }
+
+
+        return counts.Count == 0;
     }
 
     /// <summary>
